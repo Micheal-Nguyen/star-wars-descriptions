@@ -7,13 +7,13 @@ class Planets extends Component {
         super(props);
         this.state = {
           planets: []
-        }
+        };
       }
 
     componentDidMount(){
         axios.get('https://swapi.dev/api/planets/')
             .then(res => {
-                this.setState({planets: res.data.results})
+                this.setState({planets: res.data.results});
             });
     }
     

@@ -23,7 +23,7 @@ class App extends Component {
     return (
       <div>
         <h1>
-          <Dropdown>
+          <Dropdown className="star-wars-dropdown">
             <Dropdown.Toggle >
               {viewCharacters ? "People": "Planets"}
             </Dropdown.Toggle>

@@ -11,12 +11,18 @@ class Characters extends Component {
       }
 
     async componentDidMount(){
-        axios.get('https://swapi.dev/api/people/')
+        let characters = []
+        await axios.get('https://swapi.dev/api/people/')
             .then(res => {
-                let characters = res.data.results;
-                this.setState({characters});
+                characters = res.data.results;
             });
-
+        let promises = []
+        characters.forEach(char => {
+            promises.push(axios.get(char.homeworld).then(res => {char.homeworld = res.data.name}))
+        });
+        await Promise.all(promises).then(() => {
+            this.setState({characters});
+        });
     }
     
 
@@ -36,7 +42,7 @@ class Characters extends Component {
                                 <b>Hair Color: </b>{char.hair_color}<br/>
                                 <b>Eye Color: </b>{char.eye_color}<br/>
                                 <b>Birth Year: </b>{char.birth_year}<br/>
-                                <b>Homeworld: </b>{char.homeworld}
+                                <b>Homeworld: </b>{char.homeworld}<br/><br/>
                             </Card.Body>
                         </Card>
                     </Col>

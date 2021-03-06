@@ -10,6 +10,7 @@ class Planets extends Component {
         };
       }
 
+    // Updates state with planets from swapi
     componentDidMount(){
         axios.get('https://swapi.dev/api/planets/')
             .then(res => {
@@ -17,24 +18,28 @@ class Planets extends Component {
             });
     }
     
+    // Function that capitalizes first letter of a string
+    capitalizeDetail(det){
+        return det.charAt(0).toUpperCase() + det.slice(1);
+    }
 
     render() {
         let planets = this.state.planets;
         return (        
             <CardDeck>
                 {planets.map(planet => {
-                return (
-                    <Col md={4} key={planet.name}>
-                        <Card>
-                            <Card.Body>
-                                <Card.Title>{planet.name}</Card.Title>
-                                <b>Climate: </b>{planet.climate}<br/>
-                                <b>Terrain: </b>{planet.terrain}<br/>
-                                <b>Population: </b>{planet.population}<br/>
-                            </Card.Body>
-                        </Card>
-                    </Col>
-                )
+                    return (
+                        <Col md={4} key={planet.name} className="star-wars-col">
+                            <Card>
+                                <Card.Body>
+                                    <Card.Title><b>{planet.name}</b></Card.Title>
+                                    <b>Climate: </b>{this.capitalizeDetail(planet.climate)}<br/>
+                                    <b>Terrain: </b>{this.capitalizeDetail(planet.terrain)}<br/>
+                                    <b>Population: </b>{this.capitalizeDetail(planet.population)}<br/>
+                                </Card.Body>
+                            </Card>
+                        </Col>
+                    )
                 })}
             </CardDeck>)
     }
